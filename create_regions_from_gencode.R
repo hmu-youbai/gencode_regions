@@ -81,13 +81,11 @@ all.cds <- unlist_obj(cds.data)
 all.fiveUTRs <- unlist_obj(fiveUTRs.data)
 all.threeUTRs <- unlist_obj(threeUTRs.data)
 
-transcripts.data <- unlist(transcripts.data)
 exons.data <- unlist(exons.data)
 threeUTRs.data <- unlist(threeUTRs.data)
 fiveUTRs.data <- unlist(fiveUTRs.data)
 cds.data <- unlist(cds.data)
 introns.data <- unlist(introns.data)
-genes.data <- unlist(genes.data)
 
 
 ## The exon_ranks can be ambiguous, we just take the consensus: mode of exon_ranks. This is not always correct, but then this is also not wrong.
@@ -121,7 +119,8 @@ write.table(tx2gene.df, file=file.path(output_dir, 'tx2gene.bed'), quote=F, sep=
 ## We still don't understand: What's a promoter?
 promoters.length <- c(1000, 2000, 3000, 4000, 5000)
 for (len in promoters.length){
-    promoters.data <- unlist(promoters(TxDb, upstream=len, downstream=len))
+    promoters.data <- promoters(TxDb, upstream=len, downstream=len)
+
     promoters.df <- create_df(promoters.data, file.path(output_dir, paste('promoters', len, 'bed', sep='.')))
 }
 
